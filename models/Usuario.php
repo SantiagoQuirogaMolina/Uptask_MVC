@@ -2,9 +2,21 @@
 
 namespace Model;
 
+use Model\ActiveRecord;
+
 class Usuario extends ActiveRecord {
     protected static $tabla = 'usuarios';
     protected static $columnasDB = ['id', 'nombre', 'email', 'password', 'token', 'confirmado'];
+
+    public $id;
+    public $nombre;
+    public $email;
+    public $password;
+    public $password2;
+    public $password_actual;
+    public $password_nuevo;
+    public $token;
+    public $confirmado;
 
     public function __construct($args = [])
     {
@@ -28,7 +40,7 @@ class Usuario extends ActiveRecord {
             self::$alertas['error'][] = 'Email no válido';
         }
         if(!$this->password) {
-            self::$alertas['error'][] = 'El Password no puede ir vacio';
+            self::$alertas['error'][] = 'El Password no puede ir vacío';
         }
         return self::$alertas;
 
@@ -43,13 +55,13 @@ class Usuario extends ActiveRecord {
             self::$alertas['error'][] = 'El Email del Usuario es Obligatorio';
         }
         if(!$this->password) {
-            self::$alertas['error'][] = 'El Password no puede ir vacio';
+            self::$alertas['error'][] = 'El Password no puede ir vacío';
         }
         if(strlen($this->password) < 6) {
             self::$alertas['error'][] = 'El password debe contener al menos 6 caracteres';
         }
         if($this->password !== $this->password2) {
-            self::$alertas['error'][] = 'Los password son diferentes';
+            self::$alertas['error'][] = 'Los passwords son diferentes';
         }
         return self::$alertas;
     }
@@ -68,7 +80,7 @@ class Usuario extends ActiveRecord {
     // Valida el Password 
     public function validarPassword() {
         if(!$this->password) {
-            self::$alertas['error'][] = 'El Password no puede ir vacio';
+            self::$alertas['error'][] = 'El Password no puede ir vacío';
         }
         if(strlen($this->password) < 6) {
             self::$alertas['error'][] = 'El password debe contener al menos 6 caracteres';
@@ -88,10 +100,10 @@ class Usuario extends ActiveRecord {
 
     public function nuevo_password() : array {
         if(!$this->password_actual) {
-            self::$alertas['error'][] = 'El Password Actual no puede ir vacio';
+            self::$alertas['error'][] = 'El Password Actual no puede ir vacío';
         }
         if(!$this->password_nuevo) {
-            self::$alertas['error'][] = 'El Password Nuevo no puede ir vacio';
+            self::$alertas['error'][] = 'El Password Nuevo no puede ir vacío';
         }
         if(strlen($this->password_nuevo) < 6) {
             self::$alertas['error'][] = 'El Password debe contener al menos 6 caracteres';
